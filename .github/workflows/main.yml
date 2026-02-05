@@ -1,0 +1,30 @@
+name: Deploy to GCE VM
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: student 06b7d99a
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/477158531663/locations/global/workloadIdentityPools/github-pool
+          service_account: github-actions-vm-sa@qwiklabs-gcp-03-e042573335d1.iam.gserviceaccount.com
+
+      - uses: google-github-actions/setup-gcloud@v2
+        
+      - name: SSH into VM and run commands
+        run: |
+          gcloud compute ssh github-actions-vm \
+            --zone=us-west3-b \
+            --command="echo 'Hello from GitHub Actions' && uptime"
