@@ -15,10 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: student 06b7d99a
+      - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: projects/477158531663/locations/global/workloadIdentityPools/github-pool
+          workload_identity_provider: projects/477158531663/locations/global/workloadIdentityPools/github-pool/providers/github-provider
           service_account: github-actions-vm-sa@qwiklabs-gcp-03-e042573335d1.iam.gserviceaccount.com
 
       - uses: google-github-actions/setup-gcloud@v2
