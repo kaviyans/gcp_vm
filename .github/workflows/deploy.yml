@@ -4,6 +4,10 @@ on:
   push:
     branches: [ "main" ]
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,6 +21,8 @@ jobs:
           workload_identity_provider: projects/477158531663/locations/global/workloadIdentityPools/github-pool
           service_account: github-actions-vm-sa@qwiklabs-gcp-03-e042573335d1.iam.gserviceaccount.com
 
+      - uses: google-github-actions/setup-gcloud@v2
+        
       - name: SSH into VM and run commands
         run: |
           gcloud compute ssh github-actions-vm \
